@@ -8,16 +8,16 @@ const expressionFormatted = computed(() => {
     let format: string = expression.value;
 
     format = format.replace(/\*\*/g, "^");
+    format = format.replace(/\//g, "<hr/>");
+
     format = format.replace(
       /\^(\d+)(?=[^\d]|$)/g,
       (_: string, exponent: string) => {
-        console.log(exponent);
         return `<sup>${exponent}</sup>`;
       }
     );
-
     format = format.replace(/\/(\d)/g, (_: string, exponent: string) => {
-      return `<hr>${exponent}`;
+      return `<hr /> ${exponent}`;
     });
 
     format = format.replace(/\+/g, " + ");
@@ -51,12 +51,21 @@ const expressionCalc = computed(() => {
       </span>
     </div>
 
-    <input type="text" v-model="expression" />
+    <div class="input">
+      <v-text-field
+        class="w-100 h-100 bg-white text-black rounded"
+        hide-details="auto"
+        label="Expression"
+        v-model="expression"
+      ></v-text-field>
+    </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
 #container {
+  min-width: 10rem;
+
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -68,12 +77,17 @@ const expressionCalc = computed(() => {
 
     & > span {
       text-align: center;
+      font-size: 1.5rem;
 
       &.result {
         display: flex;
         gap: 2rem;
       }
     }
+  }
+
+  .input {
+    width: 100%;
   }
 }
 </style>
