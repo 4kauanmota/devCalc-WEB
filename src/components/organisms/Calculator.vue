@@ -4,31 +4,34 @@ import { computed, ref } from "vue";
 const expression = ref("");
 
 const expressionFormatted = computed(() => {
-  try {
-    let format: string = expression.value;
+  let format: string = expression.value;
 
-    format = format.replace(/\*\*/g, "^");
-    format = format.replace(/\//g, "<hr/>");
+  format = format.replace(/\*\*/g, "^");
 
-    format = format.replace(
-      /\^(\d+)(?=[^\d]|$)/g,
-      (_: string, exponent: string) => {
-        return `<sup>${exponent}</sup>`;
-      }
-    );
-    format = format.replace(/\/(\d)/g, (_: string, exponent: string) => {
-      return `<hr /> ${exponent}`;
-    });
+  format = format.replace(
+    /(\d+)(\^\d+)?\/(\d+)/g,
+    (match: string, _: string) => {
+      const division = match.split("/");
+      return `<span class="space">${division[0]} <span style="display: block;"><hr/>${division[1]}</span></span>`;
+    }
+  );
+  format = format.replace(/(\d+)\//g, (_: string, exponent: string) => {
+    return `<span>${exponent} <span style="display: block;"><hr/></span></span>`;
+  });
 
-    format = format.replace(/\+/g, " + ");
-    format = format.replace(/\-/g, "  -  ");
-    format = format.replace(/\*/g, " x ");
-    format = format.replace(/\%/g, " % ");
+  format = format.replace(
+    /\^(\d+)(?=[^\d]|$)/g,
+    (_: string, exponent: string) => {
+      return `<sup>${exponent}</sup>`;
+    }
+  );
 
-    return format;
-  } catch {
-    return "pedro";
-  }
+  format = format.replace(/\+/g, " + ");
+  format = format.replace(/\-/g, "  -  ");
+  format = format.replace(/\*/g, " x ");
+  format = format.replace(/\%/g, " % ");
+
+  return format;
 });
 
 const expressionCalc = computed(() => {
@@ -41,17 +44,23 @@ const expressionCalc = computed(() => {
 </script>
 
 <template>
-  <div id="container">
-    <div class="expression">
-      <span v-html="expressionFormatted"></span>
+  <div id="container" class="d-flex flex-column ga-4">
+    <div class="expression d-flex align-center ga-2">
+      <span
+        class="formatted d-flex align-center"
+        v-html="expressionFormatted"
+      ></span>
 
-      <span class="result" v-if="expressionCalc || expressionCalc == 0">
+      <span
+        class="result d-flex ga-3"
+        v-if="expressionCalc || expressionCalc == 0"
+      >
         <span> = </span>
         <span>{{ expressionCalc }}</span>
       </span>
     </div>
 
-    <div class="input">
+    <div class="w-100">
       <v-text-field
         class="w-100 h-100 bg-white text-black rounded"
         hide-details="auto"
@@ -66,28 +75,9 @@ const expressionCalc = computed(() => {
 #container {
   min-width: 10rem;
 
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-
-  .expression {
-    display: flex;
-    align-items: center;
-    gap: 2rem;
-
-    & > span {
-      text-align: center;
-      font-size: 1.5rem;
-
-      &.result {
-        display: flex;
-        gap: 2rem;
-      }
-    }
-  }
-
-  .input {
-    width: 100%;
+  .expression > span {
+    text-align: center;
+    font-size: 1.5rem;
   }
 }
 </style>
