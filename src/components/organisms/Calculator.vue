@@ -49,11 +49,24 @@ const expressionFormatted = computed(() => {
 });
 
 const expressionCalc = computed(() => {
+  let result;
   try {
-    return eval(expression.value);
+    result = eval(expression.value);
   } catch (error) {
     console.log(error);
     return null;
+  }
+
+  if (result) {
+    const decimalIndex = result.toString().indexOf(".");
+    if (
+      decimalIndex !== -1 &&
+      result.toString().length - decimalIndex - 1 > 4
+    ) {
+      return parseFloat(result.toFixed(4));
+    } else {
+      return parseFloat(result);
+    }
   }
 });
 </script>
