@@ -3,7 +3,8 @@
 # 📄 **Informations**
 
 **This project is designed to perform calculations using the syntax of the programming languages**
-**+ > plus | - > minus | \* > times | / > division | % > rest of division | ** > power\*\*
+
+**+ > plus | - > minus | \* > times | / > division | % > rest of division | ** > power**
 
 <br>
 
