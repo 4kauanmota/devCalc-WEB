@@ -73,7 +73,7 @@ yarn run dev
 
 # 👀 **Preview**
 
-**You can test by clicking [HERE](https://htmlpreview.github.io/?https://dev-calc-five.vercel.app/)**
+**You can test by clicking [HERE](https://dev-calc-five.vercel.app/)**
 
 <br>
 
