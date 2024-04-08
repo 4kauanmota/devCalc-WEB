@@ -2,7 +2,7 @@
 
 # 📄 **Informations**
 
-**This project is designed to perform calculations using the syntax of the programming languages**
+**This project is designed to perform calculations using the syntax of the programming languages.**
 
 **+ > plus | - > minus | \* > times | / > division | % > rest of division | ** > power**
 
@@ -12,6 +12,7 @@
 
 - Calculations with programming languages sintax
 - Calculation formatting
+- Print expression
 
 <br>
 
